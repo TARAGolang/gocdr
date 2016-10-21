@@ -1,4 +1,4 @@
-package gocdr
+package testutils
 
 import (
 	"encoding/json"

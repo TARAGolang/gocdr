@@ -1,8 +1,12 @@
 package gocdr
 
-import "github.com/fulldump/golax"
+import (
+	"github.com/fulldump/golax"
 
-func InterceptorCdr2Channel(s chan *Definition) *golax.Interceptor {
+	"github.com/smartdigits/gocdr/model"
+)
+
+func InterceptorCdr2Channel(s chan *model.CDR) *golax.Interceptor {
 	return &golax.Interceptor{
 		Documentation: golax.Doc{
 			Name: "Cdr2Channel",
@@ -12,8 +16,7 @@ func InterceptorCdr2Channel(s chan *Definition) *golax.Interceptor {
 		},
 		After: func(c *golax.Context) {
 			cdr := GetCdr(c)
-			_ = cdr
-			// TODO: Write to channel :)
+			s <- cdr
 		},
 	}
 }
