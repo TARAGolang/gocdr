@@ -3,7 +3,9 @@ package utils
 import (
 	"time"
 
-	"vendor/gopkg.in/mgo.v2"
+	"gopkg.in/mgo.v2"
+
+	"github.com/smartdigits/gocdr/model"
 )
 
 func Chan2Mongo(s chan *model.CDR, m *mgo.Collection) {

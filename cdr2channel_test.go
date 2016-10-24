@@ -1,10 +1,9 @@
 package gocdr
 
 import (
-	"fmt"
 	"reflect"
+	"strconv"
 	"testing"
-	"time"
 
 	"github.com/fulldump/apitest"
 	"github.com/fulldump/golax"
@@ -15,17 +14,7 @@ import (
 
 func Test_Cdr2channel(t *testing.T) {
 
-	cdrs := make(chan *model.CDR, 100)
-
-	go func() {
-		for {
-			cdr := <-cdrs
-			fmt.Println("CDR:", cdr)
-			time.Sleep(1000 * time.Millisecond)
-		}
-		fmt.Println("Parallel")
-		fmt.Println("CHAN:", cdrs)
-	}()
+	cdrs := make(chan *model.CDR, 10)
 
 	cdrtest := testutils.NewTestCDR()
 
@@ -38,45 +27,27 @@ func Test_Cdr2channel(t *testing.T) {
 		Node("api").
 		Method("GET", func(c *golax.Context) {
 
-		name := c.Request.URL.Query().Get("name")
-
-		cdr := GetCdr(c)
-		cdr.Custom = map[string]interface{}{
-			"name": name,
+		GetCdr(c).Custom = map[string]interface{}{
+			"name": c.Request.URL.Query().Get("name"),
 		}
 
 	})
 
 	s := apitest.New(a)
 
-	method := "GET"
-	url := "/api?name="
-	consumer_id := "my-consumer-id"
-
-	s.Request(method, url+"one").
-		WithHeader("X-Consumer-Id", consumer_id).
-		Do()
-
-	s.Request(method, url+"two").
-		WithHeader("X-Consumer-Id", consumer_id).
-		Do()
-
-	if cdrtest.Memory[0].Custom.(map[string]interface{})["name"] != "one" {
-		t.Error("CDR 'one' not found in memory (first position)")
+	// Do sample SYNCed requests
+	for i := 0; i < 10; i++ {
+		s.Request("GET", "/api?name="+strconv.Itoa(i)).
+			WithHeader("X-Consumer-Id", "my-consumer-id").
+			Do()
 	}
 
-	if cdrtest.Memory[1].Custom.(map[string]interface{})["name"] != "two" {
-		t.Error("CDR 'two' not found in memory (second position)")
+	// Extract from channel and compare to memory
+	for _, memory_cdr := range cdrtest.Memory {
+		channel_cdr := <-cdrs
+		if !reflect.DeepEqual(channel_cdr, memory_cdr) {
+			t.Error("Channel CDR does not match with memory CDR")
+		}
 	}
 
-	// time.Sleep(30 * time.Second)
-
-	// Check Reset()
-	cdrtest.Reset()
-	if !reflect.DeepEqual(cdrtest.Memory, []*model.CDR{}) {
-		t.Error("`TestCDR.Reset()` should empty the `Memory` array.")
-		return
-	}
-
-	// t.FailNow()
 }

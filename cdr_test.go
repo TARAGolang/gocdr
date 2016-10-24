@@ -108,5 +108,4 @@ func Test_Cdr(t *testing.T) {
 		t.Error("read_access")
 	}
 
-	t.FailNow()
 }

@@ -19,6 +19,7 @@ setup:
 	$(GOCMD) get github.com/fulldump/golax
 	$(GOCMD) get github.com/fulldump/apitest
 	$(GOCMD) get gopkg.in/mgo.v2
+	$(GOCMD) get github.com/satori/go.uuid
 
 test:
-	$(GOCMD) test $(PROJECT)
+	$(GOCMD) test $(PROJECT)/utils
