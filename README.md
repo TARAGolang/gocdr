@@ -1,6 +1,10 @@
 # gocdr
 
 [![Build Status](https://travis-ci.org/smartdigits/gocdr.svg?branch=master)](https://travis-ci.org/smartdigits/gocdr)
+[![Go report card](http://goreportcard.com/badge/smartdigits/gocdr)](https://goreportcard.com/report/smartdigits/gocdr)
+[![GoDoc](https://godoc.org/github.com/smartdigits/gocdr?status.svg)](https://godoc.org/github.com/smartdigits/gocdr)
+
+<sup>Tested for Go 1.5, 1.6, 1.7, tip</sup>
 
 CDRs SDK for SmartDigits billing system
 
