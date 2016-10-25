@@ -1,7 +1,11 @@
 # gocdr
 
+[![Build Status](https://travis-ci.org/smartdigits/gocdr.svg?branch=master)](https://travis-ci.org/smartdigits/gocdr)
+
 CDRs SDK for SmartDigits billing system
 
+TODO: add deps: run y test
+TODO: remove mgo dep in model.cdr
 
 <!-- MarkdownTOC autolink=true bracket=round depth=4 -->
 

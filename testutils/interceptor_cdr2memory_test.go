@@ -7,20 +7,20 @@ import (
 	"github.com/fulldump/apitest"
 	"github.com/fulldump/golax"
 
+	"github.com/smartdigits/gocdr"
 	"github.com/smartdigits/gocdr/model"
-	"github.com/smartdigits/gocdr/testutils"
 )
 
 func Test_Cdr2memory(t *testing.T) {
 
-	cdrtest := testutils.NewTestCDR()
+	cdrtest := NewTestCDR()
 
 	a := golax.NewApi()
 
 	a.Root.
 		Interceptor(cdrtest.InterceptorCdr2Memory()).
-		Interceptor(InterceptorCdr2Log()).
-		Interceptor(InterceptorCdr("invented-service")).
+		Interceptor(gocdr.InterceptorCdr2Log()).
+		Interceptor(gocdr.InterceptorCdr("invented-service")).
 		Node("api").
 		Method("GET", func(c *golax.Context) {
 
