@@ -11,11 +11,11 @@ import (
 //
 // Typical usage:
 //
-// func MyHandler(c *golax.Context) {
-// 	// ...
-// 	cdr := gocdr.GetCdr(c)
-// 	// ...
-// }
+//	func MyHandler(c *golax.Context) {
+//		// ...
+//		cdr := gocdr.GetCdr(c)
+//		// ...
+//	}
 func GetCdr(c *golax.Context) *model.CDR {
 	v, exists := c.Get(constants.CONTEXT_KEY)
 
