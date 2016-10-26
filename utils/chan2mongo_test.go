@@ -72,6 +72,7 @@ func Test_Chan2Mongo(t *testing.T) {
 		}
 
 		// Tweak differences between mongo representation and memory:
+		mongo_cdr.Id = memory_cdr.Id
 		mongo_cdr.Custom = map[string]interface{}{}
 		mongo_cdr.EntryDate = memory_cdr.EntryDate
 

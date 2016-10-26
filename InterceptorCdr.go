@@ -6,7 +6,6 @@ import (
 	"time"
 
 	"github.com/fulldump/golax"
-	"gopkg.in/mgo.v2/bson"
 
 	"github.com/smartdigits/gocdr/constants"
 	"github.com/smartdigits/gocdr/model"
@@ -67,7 +66,6 @@ func InterceptorCdr(service string) *golax.Interceptor {
 		Before: func(c *golax.Context) {
 
 			cdr := &model.CDR{
-				Id:             bson.NewObjectId(),
 				Version:        constants.VERSION,
 				Service:        service,
 				Origin:         formatRemoteAddr(c.Request),
