@@ -11,6 +11,20 @@ import (
 	"github.com/smartdigits/gocdr/model"
 )
 
+// InterceptorCdr attach a new CDR to the context and populate it automatically.
+//
+// Typical usage:
+//
+// 	```go
+// 	a := golax.NewApi()
+//
+// 	a.Root.
+// 		Interceptor(InterceptorCdr2Log()).
+// 		Interceptor(InterceptorCdr("invented-service")).
+// 		Method("GET", func(c *golax.Context) {
+// 			// Implement your API here
+// 		})
+// 	```
 func InterceptorCdr(service string) *golax.Interceptor {
 	return &golax.Interceptor{
 		Documentation: golax.Doc{
