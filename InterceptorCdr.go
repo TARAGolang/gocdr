@@ -117,7 +117,7 @@ func formatRemoteAddr(r *http.Request) string {
 		r.Header.Get("X-Forwarded-For"), ",")[0])
 	if xorigin != "" {
 		return xorigin
-	} else {
-		return r.RemoteAddr[0:strings.LastIndex(r.RemoteAddr, ":")]
 	}
+
+	return r.RemoteAddr[0:strings.LastIndex(r.RemoteAddr, ":")]
 }

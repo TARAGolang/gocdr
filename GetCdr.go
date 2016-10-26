@@ -7,6 +7,17 @@ import (
 	"github.com/smartdigits/gocdr/model"
 )
 
+// GetCdr retrieve object from context.
+//
+// Typical usage:
+//
+// ```go
+// func MyHandler(c *golax.Context) {
+// 	// ...
+// 	cdr := gocdr.GetCdr(c)
+// 	// ...
+// }
+// ```
 func GetCdr(c *golax.Context) *model.CDR {
 	v, exists := c.Get(constants.CONTEXT_KEY)
 
