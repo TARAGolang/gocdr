@@ -10,7 +10,7 @@ import (
 	"github.com/fulldump/apitest"
 	"github.com/fulldump/golax"
 	uuid "github.com/satori/go.uuid"
-	"gopkg.in/mgo.v2"
+	mgo "gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 
 	"github.com/smartdigits/gocdr"
@@ -66,7 +66,7 @@ func Test_Chan2Mongo(t *testing.T) {
 	for i, memory_cdr := range cdrtest.Memory {
 
 		mongo_cdr := &model.CDR{}
-		err := collection.Find(bson.M{"request.args.name": strconv.Itoa(i)}).One(mongo_cdr)
+		err := collection.Find(bson.M{"request.query.name": strconv.Itoa(i)}).One(mongo_cdr)
 		if nil != err {
 			panic(err)
 		}

@@ -78,13 +78,13 @@ func Test_Cdr(t *testing.T) {
 		t.Error("request.length")
 	}
 
-	args := map[string][]string{
+	query := map[string][]string{
 		"query_a": []string{"aaa"},
 		"query_b": []string{"bbb"},
 	}
 
-	if !reflect.DeepEqual(args, cdr.Request.Args) {
-		t.Error("request.args")
+	if !reflect.DeepEqual(query, cdr.Request.Query) {
+		t.Error("request.query")
 	}
 
 	if int64(len(response_body)) != cdr.Response.Length {

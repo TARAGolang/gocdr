@@ -37,9 +37,13 @@ func InterceptorCdr(service string) *golax.Interceptor {
 					"method": "POST",
 					"uri": "/value-1/value-2/test-node?query_a=aaa\u0026query_b=bbb",
 					"handler": "/{param1}/{param2}/test-node",
-					"args": {
+					"query": {
 						"query_a": ["aaa"],
 						"query_b": ["bbb"]
+					},
+					"parameters": {
+						"param1": "value1",
+						"param2": "value2"
 					},
 					"length": 2
 				},
@@ -71,10 +75,12 @@ func InterceptorCdr(service string) *golax.Interceptor {
 				EntryTimestamp: float64(time.Now().UnixNano()) / 1000000000,
 				ElapsedSeconds: 0,
 				Request: model.Request{
-					Length: c.Request.ContentLength,
-					Method: c.Request.Method,
-					URI:    c.Request.RequestURI,
-					Args:   c.Request.URL.Query(),
+					Length:     c.Request.ContentLength,
+					Method:     c.Request.Method,
+					URI:        c.Request.RequestURI,
+					Query:      c.Request.URL.Query(),
+					Parameters: map[string]string{}, // TODO: put real params,
+					// issue: https://github.com/fulldump/golax/issues/20
 				},
 				Custom: map[string]interface{}{},
 			}
