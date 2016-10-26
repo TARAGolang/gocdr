@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"fmt"
 	"time"
 
 	"gopkg.in/mgo.v2"
@@ -9,7 +10,7 @@ import (
 )
 
 // Chan2Mongo is a util to extract CDRs from a channel and store to a MongoDB
-// collection. This interceptor should wrap `InterceptorCdr`.
+// database. This interceptor should wrap `InterceptorCdr`.
 //
 // Note that this interceptor do not extract the CDRs from the channel, that should
 // be done by other task. There is a util included (`Chan2Mongo`) to do that.
@@ -17,9 +18,9 @@ import (
 // Typical usage:
 // 	channel_cdrs := make(chan *model.CDR, 100)  // Buffered channel, 100 items
 //
-// 	collection_cdrs := mongo_db.C("cdrs") // assume `mongo_db` already exists
+// 	assume `mongo_db` already exists
 //
-// 	Chan2Mongo(channel_cdrs, collection_cdrs) // do the job: channel -> mongo
+// 	Chan2Mongo(channel_cdrs, mongo_db) // do the job: channel -> mongo
 //
 // 	a := golax.NewApi()
 //
@@ -30,18 +31,21 @@ import (
 // 	        // Implement your API here
 // 	    })
 //
-func Chan2Mongo(s chan *model.CDR, m *mgo.Collection) {
+func Chan2Mongo(s chan *model.CDR, m *mgo.Database) {
 
 	go func() {
 
 		for {
-			cdr := <-s
 
+			name := GetCollectionName()
+			c := m.C(name)
+
+			cdr := <-s
 			if nil == cdr {
 				break
 			}
 
-			err := m.Insert(cdr)
+			err := c.Insert(cdr)
 			if nil != err {
 				// TODO: alarm warning?
 				s <- cdr
@@ -51,4 +55,15 @@ func Chan2Mongo(s chan *model.CDR, m *mgo.Collection) {
 
 	}()
 
+}
+
+// GetCollectionName generates the name for the collection to split CDR
+// across timestamp
+func GetCollectionName() string {
+	t := time.Now()
+
+	return fmt.Sprintf(
+		"cdr%04d%02d%02d",
+		t.Year(), t.Month(), t.Day(),
+	)
 }

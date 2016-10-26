@@ -27,15 +27,15 @@ func Test_Chan2Mongo(t *testing.T) {
 	session.SetSyncTimeout(100 * time.Millisecond) // Insert fast fail
 
 	db := session.DB(dbName)
-	collection := db.C("cdrs")
+	collection := db.C(GetCollectionName())
 
 	defer func(d *mgo.Database) {
-		d.DropDatabase()
+		//d.DropDatabase()
 	}(db)
 
 	cdrs := make(chan *model.CDR, 10) // #1 make channel
 
-	Chan2Mongo(cdrs, collection) // #2 dump channel to mongo
+	Chan2Mongo(cdrs, db) // #2 dump channel to mongo
 
 	cdrtest := testutils.NewTestCDR()
 

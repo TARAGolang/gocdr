@@ -160,9 +160,9 @@ Typical usage:
 ```go
 channel_cdrs := make(chan *model.CDR, 100)  // Buffered channel, 100 items
 
-collection_cdrs := mongo_db.C("cdrs") // assume `mongo_db` already exists
+// assume `mongo_db` already exists
 
-Chan2Mongo(channel_cdrs, collection_cdrs) // do the job: channel -> mongo
+Chan2Mongo(channel_cdrs, mongo_db) // do the job: channel -> mongo
 
 a := golax.NewApi()
 
