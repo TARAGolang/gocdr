@@ -7,7 +7,8 @@ import (
 	"github.com/fulldump/golax"
 )
 
-// InterceptorCdr2Log log CDR to `stdout`. This interceptor should wrap `InterceptorCdr`.
+// InterceptorCdr2Log log CDR to `stdout`. This interceptor should wrap
+// `InterceptorCdr`.
 //
 // Typical usage:
 //
