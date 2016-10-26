@@ -27,7 +27,6 @@ func Test_Chan2Mongo(t *testing.T) {
 	session.SetSyncTimeout(100 * time.Millisecond) // Insert fast fail
 
 	db := session.DB(dbName)
-	collection := db.C(GetCollectionName())
 
 	defer func(d *mgo.Database) {
 		//d.DropDatabase()
@@ -64,6 +63,8 @@ func Test_Chan2Mongo(t *testing.T) {
 
 	// Extract from mongo and compare to memory
 	for i, memoryCdr := range cdrtest.Memory {
+
+		collection := db.C(GetCollectionName(memoryCdr))
 
 		mongoCdr := &model.CDR{}
 		err := collection.Find(bson.M{"request.query.name": strconv.Itoa(i)}).One(mongoCdr)
