@@ -15,16 +15,14 @@ import (
 //
 // Typical usage:
 //
-// 	```go
 // 	a := golax.NewApi()
 //
 // 	a.Root.
-// 		Interceptor(InterceptorCdr2Log()).
-// 		Interceptor(InterceptorCdr("invented-service")).
-// 		Method("GET", func(c *golax.Context) {
-// 			// Implement your API here
-// 		})
-// 	```
+// 	    Interceptor(InterceptorCdr2Log()).
+// 	    Interceptor(InterceptorCdr("invented-service")).
+// 	    Method("GET", func(c *golax.Context) {
+// 	        // Implement your API here
+// 	    })
 func InterceptorCdr(service string) *golax.Interceptor {
 	return &golax.Interceptor{
 		Documentation: golax.Doc{

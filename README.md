@@ -33,7 +33,7 @@ Gocdr is a set of interceptors to generate and store CDRs:
 And some helpers:
 
 * [GetCdr](#getcdr) - Retrieve CDR from context
-* NewTestCDR - Store CDRs in memory to allow unit testing
+* [NewTestCDR](#newtestcdr) - Store CDRs in memory to allow unit testing
 
 
 ## InterceptorCdr
