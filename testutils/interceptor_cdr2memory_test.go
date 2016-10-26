@@ -26,7 +26,7 @@ func Test_Cdr2memory(t *testing.T) {
 
 		name := c.Request.URL.Query().Get("name")
 
-		cdr := GetCdr(c)
+		cdr := getCdr(c)
 		cdr.Custom = map[string]interface{}{
 			"name": name,
 		}

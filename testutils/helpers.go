@@ -7,7 +7,7 @@ import (
 	"github.com/smartdigits/gocdr/model"
 )
 
-func GetCdr(c *golax.Context) *model.CDR {
+func getCdr(c *golax.Context) *model.CDR {
 	v, exists := c.Get(constants.CONTEXT_KEY)
 
 	if !exists {
