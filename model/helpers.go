@@ -1,5 +1,6 @@
 package model
 
+// SetError overwrite error code and description in a CDR
 func (cdr *CDR) SetError(code int, desc string) {
 	cdr.Response.Error = &Error{
 		Code:        code,
@@ -7,6 +8,7 @@ func (cdr *CDR) SetError(code int, desc string) {
 	}
 }
 
+// AddReadAccess add a consumerID to read access list for this CDR
 func (cdr *CDR) AddReadAccess(consumerID string) bool {
 	if "" == consumerID {
 		return false
