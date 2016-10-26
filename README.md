@@ -8,9 +8,6 @@
 
 CDRs SDK for SmartDigits billing system
 
-TODO: add deps: run y test
-TODO: remove mgo dep in model.cdr
-
 <!-- MarkdownTOC autolink=true bracket=round depth=4 -->
 
 - [InterceptorCdr](#interceptorcdr)
@@ -21,6 +18,8 @@ TODO: remove mgo dep in model.cdr
 - [InterceptorCdr2Channel](#interceptorcdr2channel)
 - [GetCdr](#getcdr)
 - [NewTestCDR](#newtestcdr)
+- [Dependencies](#dependencies)
+- [Testing](#testing)
 
 <!-- /MarkdownTOC -->
 
@@ -213,4 +212,33 @@ func Test_ExampleBilling(t *testing.T) {
 		t.Error("blah blah blah...")
 	}
 }
+```
+
+## Dependencies
+
+Dependencies for testing are:
+
+* github.com/fulldump/apitest
+* github.com/fulldump/golax
+* github.com/satori/go.uuid
+* gopkg.in/mgo.v2
+
+NOTE: Pinned versions are included in `vendor/*` so tests will always run.
+
+Transitive dependencies for runtime are:
+
+* github.com/fulldump/golax
+
+If `utils.Chan2Mongo` is used, as you can expect, it will be needed also:
+
+* gopkg.in/mgo.v2
+
+
+## Testing
+
+As simple as:
+
+```sh
+git clone "<this-repo>"
+make
 ```
