@@ -10,4 +10,4 @@ services:
   - mongodb
 
 script:
- - make setup && make test
+ - make
