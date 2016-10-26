@@ -43,9 +43,9 @@ func Test_Cdr2channel(t *testing.T) {
 	}
 
 	// Extract from channel and compare to memory
-	for _, memory_cdr := range cdrtest.Memory {
-		channel_cdr := <-cdrs
-		if !reflect.DeepEqual(channel_cdr, memory_cdr) {
+	for _, memoryCdr := range cdrtest.Memory {
+		channelCdr := <-cdrs
+		if !reflect.DeepEqual(channelCdr, memoryCdr) {
 			t.Error("Channel CDR does not match with memory CDR")
 		}
 	}

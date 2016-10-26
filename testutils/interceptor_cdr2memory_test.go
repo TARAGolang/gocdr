@@ -37,14 +37,14 @@ func Test_Cdr2memory(t *testing.T) {
 
 	method := "GET"
 	url := "/api?name="
-	consumer_id := "my-consumer-id"
+	consumerId := "my-consumer-id"
 
 	s.Request(method, url+"one").
-		WithHeader("X-Consumer-Id", consumer_id).
+		WithHeader("X-Consumer-Id", consumerId).
 		Do()
 
 	s.Request(method, url+"two").
-		WithHeader("X-Consumer-Id", consumer_id).
+		WithHeader("X-Consumer-Id", consumerId).
 		Do()
 
 	if cdrtest.Memory[0].Custom.(map[string]interface{})["name"] != "one" {
