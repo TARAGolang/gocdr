@@ -20,13 +20,13 @@ import (
 
 func Test_Chan2Mongo(t *testing.T) {
 
-	db_name := "gocdr-" + uuid.NewV4().String()
+	dbName := "gocdr-" + uuid.NewV4().String()
 
 	session, _ := mgo.Dial("localhost")
 	session.SetMode(mgo.Monotonic, true)
 	session.SetSyncTimeout(100 * time.Millisecond) // Insert fast fail
 
-	db := session.DB(db_name)
+	db := session.DB(dbName)
 	collection := db.C("cdrs")
 
 	defer func(d *mgo.Database) {
@@ -63,20 +63,20 @@ func Test_Chan2Mongo(t *testing.T) {
 	}
 
 	// Extract from mongo and compare to memory
-	for i, memory_cdr := range cdrtest.Memory {
+	for i, memoryCdr := range cdrtest.Memory {
 
-		mongo_cdr := &model.CDR{}
-		err := collection.Find(bson.M{"request.query.name": strconv.Itoa(i)}).One(mongo_cdr)
+		mongoCdr := &model.CDR{}
+		err := collection.Find(bson.M{"request.query.name": strconv.Itoa(i)}).One(mongoCdr)
 		if nil != err {
 			panic(err)
 		}
 
 		// Tweak differences between mongo representation and memory:
-		mongo_cdr.Id = memory_cdr.Id
-		mongo_cdr.Custom = map[string]interface{}{}
-		mongo_cdr.EntryDate = memory_cdr.EntryDate
+		mongoCdr.Id = memoryCdr.Id
+		mongoCdr.Custom = map[string]interface{}{}
+		mongoCdr.EntryDate = memoryCdr.EntryDate
 
-		if !reflect.DeepEqual(mongo_cdr, memory_cdr) {
+		if !reflect.DeepEqual(mongoCdr, memoryCdr) {
 			t.Error("Channel CDR does not match with memory CDR")
 		}
 	}

@@ -90,13 +90,13 @@ func InterceptorCdr(service string) *golax.Interceptor {
 
 			cdr := GetCdr(c)
 
-			exit_timestamp := float64(time.Now().UnixNano()) / 1000000000
-			cdr.ElapsedSeconds = exit_timestamp - cdr.EntryTimestamp
+			exitTimestamp := float64(time.Now().UnixNano()) / 1000000000
+			cdr.ElapsedSeconds = exitTimestamp - cdr.EntryTimestamp
 
-			consumer_id := c.Request.Header.Get("X-Consumer-Id")
+			consumerID := c.Request.Header.Get("X-Consumer-Id")
 
-			cdr.ConsumerId = consumer_id
-			cdr.AddReadAccess(consumer_id)
+			cdr.ConsumerId = consumerID
+			cdr.AddReadAccess(consumerID)
 
 			cdr.Request.Handler = c.PathHandlers
 

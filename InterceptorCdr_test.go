@@ -16,9 +16,9 @@ func Test_Cdr(t *testing.T) {
 	// Test configuration
 	method := "POST"
 	url := "/value-1/value-2/test-node?query_a=aaa&query_b=bbb"
-	consumer_id := "my-consumer-id"
-	request_body := "hi"
-	response_body := "hello"
+	consumerID := "my-consumer-id"
+	requestBody := "hi"
+	responseBody := "hello"
 
 	cdrtest := testutils.NewTestCDR()
 
@@ -42,20 +42,20 @@ func Test_Cdr(t *testing.T) {
 
 		c.Error(222, "my-error-description").ErrorCode = 27
 
-		fmt.Fprintf(c.Response, response_body)
+		fmt.Fprintf(c.Response, responseBody)
 	})
 
 	s := apitest.New(a)
 
 	s.Request(method, url).
-		WithHeader("X-Consumer-Id", consumer_id).
-		WithBodyString(request_body).
+		WithHeader("X-Consumer-Id", consumerID).
+		WithBodyString(requestBody).
 		Do()
 
 	cdr := cdrtest.Memory[0]
 
-	if consumer_id != cdr.ConsumerId {
-		t.Error("consumer_id")
+	if consumerID != cdr.ConsumerId {
+		t.Error("consumerID")
 	}
 
 	if "invented-service" != cdr.Service {
@@ -74,7 +74,7 @@ func Test_Cdr(t *testing.T) {
 		t.Error("request.handler")
 	}
 
-	if int64(len(request_body)) != cdr.Request.Length {
+	if int64(len(requestBody)) != cdr.Request.Length {
 		t.Error("request.length")
 	}
 
@@ -87,7 +87,7 @@ func Test_Cdr(t *testing.T) {
 		t.Error("request.query")
 	}
 
-	if int64(len(response_body)) != cdr.Response.Length {
+	if int64(len(responseBody)) != cdr.Response.Length {
 		t.Error("response.length")
 	}
 
@@ -103,7 +103,7 @@ func Test_Cdr(t *testing.T) {
 		t.Error("response.error.description")
 	}
 
-	access := []string{"other-involved-consumer-id", consumer_id}
+	access := []string{"other-involved-consumer-id", consumerID}
 	if !reflect.DeepEqual(access, cdr.ReadAccess) {
 		t.Error("read_access")
 	}

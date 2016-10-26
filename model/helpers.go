@@ -7,16 +7,16 @@ func (cdr *CDR) SetError(code int, desc string) {
 	}
 }
 
-func (cdr *CDR) AddReadAccess(consumer_id string) bool {
-	if "" == consumer_id {
+func (cdr *CDR) AddReadAccess(consumerID string) bool {
+	if "" == consumerID {
 		return false
 	}
 
 	for _, element := range cdr.ReadAccess {
-		if consumer_id == element {
+		if consumerID == element {
 			return false
 		}
 	}
-	cdr.ReadAccess = append(cdr.ReadAccess, consumer_id)
+	cdr.ReadAccess = append(cdr.ReadAccess, consumerID)
 	return true
 }
