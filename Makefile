@@ -5,7 +5,7 @@ GOCMD=GOPATH=$(GOPATH) GO15VENDOREXPERIMENT=1 $(GO)
 
 .PHONY: test all clean dependencies setup example
 
-all: test
+all: setup test
 
 clean:
 	rm -fr src/
