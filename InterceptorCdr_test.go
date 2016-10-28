@@ -87,6 +87,15 @@ func Test_Cdr(t *testing.T) {
 		t.Error("request.query")
 	}
 
+	parameters := map[string]string{
+		"param1": "value-1",
+		"param2": "value-2",
+	}
+
+	if !reflect.DeepEqual(parameters, cdr.Request.Parameters) {
+		t.Error("request.parameters")
+	}
+
 	if int64(len(responseBody)) != cdr.Response.Length {
 		t.Error("response.length")
 	}

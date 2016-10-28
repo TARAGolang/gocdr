@@ -89,8 +89,7 @@ func InterceptorCdr(service string) *golax.Interceptor {
 					Method:     c.Request.Method,
 					URI:        c.Request.RequestURI,
 					Query:      c.Request.URL.Query(),
-					Parameters: map[string]string{}, // TODO: put real params,
-					// issue: https://github.com/fulldump/golax/issues/20
+					Parameters: c.Parameters,
 				},
 				Custom: map[string]interface{}{},
 			}
