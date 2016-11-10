@@ -58,7 +58,7 @@ func Chan2Mongo(s chan *model.CDR, m *mgo.Database) {
 // GetCollectionName generates the name for the collection to split CDR
 // across timestamp
 func GetCollectionName(cdr *model.CDR) string {
-	return "cdr"
+	return "cdrs"
 	// return fmt.Sprintf(
 	// 	"cdr%04d%02d%02d",
 	// 	cdr.EntryDate.Year(),

@@ -20,7 +20,7 @@ func Test_Cdr2memory(t *testing.T) {
 	a.Root.
 		Interceptor(cdrtest.InterceptorCdr2Memory()).
 		Interceptor(gocdr.InterceptorCdr2Log()).
-		Interceptor(gocdr.InterceptorCdr("invented-service")).
+		Interceptor(gocdr.InterceptorCdr(nil)).
 		Node("api").
 		Method("GET", func(c *golax.Context) {
 

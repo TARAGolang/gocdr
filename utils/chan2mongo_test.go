@@ -42,7 +42,7 @@ func Test_Chan2Mongo(t *testing.T) {
 	a.Root.
 		Interceptor(cdrtest.InterceptorCdr2Memory()).
 		Interceptor(gocdr.InterceptorCdr2Channel(cdrs)). // #3 put CDRs in channel
-		Interceptor(gocdr.InterceptorCdr("invented-service")).
+		Interceptor(gocdr.InterceptorCdr(nil)).
 		Node("api").
 		Method("GET", func(c *golax.Context) {})
 

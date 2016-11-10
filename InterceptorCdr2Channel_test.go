@@ -23,7 +23,7 @@ func Test_Cdr2channel(t *testing.T) {
 	a.Root.
 		Interceptor(cdrtest.InterceptorCdr2Memory()).
 		Interceptor(InterceptorCdr2Channel(cdrs)).
-		Interceptor(InterceptorCdr("invented-service")).
+		Interceptor(InterceptorCdr(&model.Service{Name: "invented-service"})).
 		Node("api").
 		Method("GET", func(c *golax.Context) {
 
