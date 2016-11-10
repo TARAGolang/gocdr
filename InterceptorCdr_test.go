@@ -8,6 +8,7 @@ import (
 	"github.com/fulldump/apitest"
 	"github.com/fulldump/golax"
 
+	"github.com/smartdigits/gocdr/model"
 	"github.com/smartdigits/gocdr/testutils"
 )
 
@@ -22,12 +23,17 @@ func Test_Cdr(t *testing.T) {
 
 	cdrtest := testutils.NewTestCDR()
 
-	a := golax.NewApi()
+	service := &model.Service{
+		Name:    "invented-service",
+		Version: "7.3.0",
+		Commit:  "70bbda5",
+	}
 
+	a := golax.NewApi()
 	a.Root.
 		Interceptor(cdrtest.InterceptorCdr2Memory()).
 		Interceptor(InterceptorCdr2Log()).
-		Interceptor(InterceptorCdr("invented-service")).
+		Interceptor(InterceptorCdr(service)).
 		Node("{param1}").
 		Node("{param2}").
 		Node("test-node").
@@ -58,8 +64,20 @@ func Test_Cdr(t *testing.T) {
 		t.Error("consumerID")
 	}
 
-	if "invented-service" != cdr.Service {
+	if nil == cdr.Service {
 		t.Error("service")
+	}
+
+	if "invented-service" != cdr.Service.Name {
+		t.Error("service.name")
+	}
+
+	if "7.3.0" != cdr.Service.Version {
+		t.Error("service.version")
+	}
+
+	if "70bbda5" != cdr.Service.Commit {
+		t.Error("service.commit")
 	}
 
 	if method != cdr.Request.Method {

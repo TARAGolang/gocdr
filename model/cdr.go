@@ -23,8 +23,8 @@ type CDR struct {
 	// SessionId stores cookie session, in case the client was using a session.
 	SessionId string `json:"session_id" bson:"session_id"`
 
-	// Service indicates the service/server name being provided.
-	Service string `json:"service" bson:"service"`
+	// Service indicates the service/server being provided.
+	Service *Service `json:"service" bson:"service"`
 
 	// EntryDate stores a `Time` object with the starting request timestamp.
 	EntryDate time.Time `json:"entry_date" bson:"entry_date"`

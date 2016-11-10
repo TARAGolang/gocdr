@@ -17,13 +17,19 @@ import (
 //
 // 	a := golax.NewApi()
 //
+// 	s := &model.Service{
+// 	    Name: "My service",
+// 	    Version: "7.3.0",
+// 	    Commit: "0f0710f",
+// 	}
+//
 // 	a.Root.
 // 	    Interceptor(InterceptorCdr2Log()).
-// 	    Interceptor(InterceptorCdr("invented-service")).
+// 	    Interceptor(InterceptorCdr(s)).
 // 	    Method("GET", func(c *golax.Context) {
 // 	        // Implement your API here
 // 	    })
-func InterceptorCdr(service string) *golax.Interceptor {
+func InterceptorCdr(service *model.Service) *golax.Interceptor {
 	return &golax.Interceptor{
 		Documentation: golax.Doc{
 			Name: "InterceptorCDR",
@@ -40,7 +46,11 @@ func InterceptorCdr(service string) *golax.Interceptor {
 				"consumer_id": "my-consumer-id",
 				"origin": "127.0.0.1",
 				"session_id": "",
-				"service": "invented-service",
+				"service": {
+					"name": "invented-service",
+					"version": "7.3.0",
+					"commit": "a587df8"
+				},
 				"entry_date": "2016-10-21T18:46:19.820423299+02:00",
 				"entry_timestamp": 1.4770683798204234e+09,
 				"elapsed_seconds": 1.621246337890625e-05,
