@@ -43,12 +43,11 @@ func Chan2Mongo(s chan *model.CDR, m *mgo.Database) {
 			name := GetCollectionName(cdr)
 			c := m.C(name)
 
-			err := c.Insert(cdr)
-			if nil != err {
+			for e := c.Insert(cdr); nil != e; e = c.Insert(cdr) {
 				// TODO: alarm warning?
-				s <- cdr
 				time.Sleep(1 * time.Second)
 			}
+
 		}
 
 	}()
